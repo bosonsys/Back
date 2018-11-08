@@ -41,8 +41,8 @@ def animate(i):
     ax1.plot(df['insert_on'], df['lastPrice'])
     ax1.plot(indVal['insert_on'], indVal['sma1'])
     ax1.plot(indVal['insert_on'], indVal['sma2'])
-    # ax1.plot(df['insert_on'], df['lastPrice'].rolling(9).mean(),label= 'MA 9 days')
-    # ax1.plot(df['insert_on'], df['lastPrice'].rolling(21).mean(),label= 'MA 21 days')
+    # ax1.plot(df['insert_on'], df['lastPrice'].rolling(9).mean(), label= 'MA 9 days')
+    # ax1.plot(df['insert_on'], df['lastPrice'].rolling(42).mean(),label= 'MA 42 days')
     # ax1.plot(df['insert_on'], df['lastPrice'].rolling(100).mean(),label= 'MA 50 days')
     plt.xticks(rotation=45)
     for index, row in callF.iterrows():
