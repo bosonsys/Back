@@ -3,8 +3,8 @@ import matplotlib.animation as animation
 import pandas as pd
 from sqlalchemy import create_engine
 
-gDate = "2018-11-05 09:00:00"
-nDate = "2018-11-05 15:20:00"
+gDate = "2018-11-02 09:15:00"
+nDate = "2018-11-02 15:20:00"
 
 engine = create_engine('mysql+pymysql://root:@localhost/market')
 # query = 'SELECT * FROM marketwatch where updatedTime > \"2018-09-26 \" and updatedTime < \"2018-09-28\"';
@@ -33,6 +33,8 @@ def animate(i):
     df = pd.read_sql_query(query, engine)
     indQ = 'SELECT * FROM indicators where tradingsymbol ="'+name+'" and  insert_on > "' + gDate + '" and insert_on < "' + nDate + '"'
     indVal = pd.read_sql_query(indQ, engine)
+    swQ = 'SELECT * FROM swingdata where script ="'+name+'" and  stime > "' + gDate + '" and stime < "' + nDate + '"'
+    swVal = pd.read_sql_query(swQ, engine)
     callQ = 'SELECT * FROM intra_call where nse ="'+name+'" and inserted_on > "' + gDate + '"'
     call = pd.read_sql_query(callQ, engine)
     # names = df.tradingsymbol.unique()
@@ -41,6 +43,7 @@ def animate(i):
     ax1.plot(df['insert_on'], df['lastPrice'])
     ax1.plot(indVal['insert_on'], indVal['sma1'])
     ax1.plot(indVal['insert_on'], indVal['sma2'])
+    ax1.plot(swVal['stime'], swVal['sprice'])
     # ax1.plot(df['insert_on'], df['lastPrice'].rolling(9).mean(), label= 'MA 9 days')
     # ax1.plot(df['insert_on'], df['lastPrice'].rolling(42).mean(),label= 'MA 42 days')
     # ax1.plot(df['insert_on'], df['lastPrice'].rolling(100).mean(),label= 'MA 50 days')
