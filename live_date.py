@@ -20,9 +20,9 @@ def DrawChart(script, call, i, j):
         # subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
         axes1[i, j].clear()
         axes1[i, j].plot(script['insert_on'], script['change'])
-        axes1[i, j].plot(script['insert_on'], script['change'].rolling(9).mean(),label= 'MA 9 days')
-        axes1[i, j].plot(script['insert_on'], script['change'].rolling(50).mean(),label= 'MA 21 days')
-        axes1[i, j].plot(script['insert_on'], script['change'].rolling(80).mean(),label= 'MA 50 days')
+        # axes1[i, j].plot(script['insert_on'], script['change'].rolling(9).mean(),label= 'MA 9 days')
+        # axes1[i, j].plot(script['insert_on'], script['change'].rolling(50).mean(),label= 'MA 21 days')
+        # axes1[i, j].plot(script['insert_on'], script['change'].rolling(80).mean(),label= 'MA 50 days')
         axes1[i, j].set_title(script['tradingsymbol'].any())
         axes1[i, j].set_xticklabels([])
         callF = call.loc[call['nse'] == script['tradingsymbol'].any()]
@@ -30,11 +30,17 @@ def DrawChart(script, call, i, j):
             if row['call'] == 1:
                 axes1[i, j].annotate('Buy', (row['inserted_on'], (row['per'] -.2)), textcoords='data')
                 if row['status'] !=0:
-                    axes1[i, j].annotate('Buy Exit', (row['updated_on'], row['cPer']), textcoords='data')
+                    if row['status'] == 1:
+                        axes1[i, j].annotate('Buy Exit', (row['updated_on'], row['cPer']), textcoords='data', color='green')
+                    if row['status'] == -1:
+                        axes1[i, j].annotate('Buy Exit', (row['updated_on'], row['cPer']), textcoords='data', color='red')
             if row['call'] == 2:
                 axes1[i, j].annotate('Sell', (row['inserted_on'], (row['per'] - .2)), textcoords='data')
                 if row['status'] !=0:
-                    axes1[i, j].annotate('Sell Exit', (row['updated_on'], row['cPer']), textcoords='data')
+                    if row['status'] == 1:
+                        axes1[i, j].annotate('Sell Exit', (row['updated_on'], row['cPer']), textcoords='data', color='green')
+                    if row['status'] == -1:
+                        axes1[i, j].annotate('Sell Exit', (row['updated_on'], row['cPer']), textcoords='data', color='red')
 
 def animate(i):
     query = 'SELECT * FROM kite_watch where insert_on > "'+gDate+'" and insert_on < "'+nDate+'"';
