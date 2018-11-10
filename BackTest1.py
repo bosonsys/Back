@@ -71,12 +71,11 @@ def animate(i):
                         ax1.annotate('Buy Exit', (row['updated_on'], row['cPrice']), textcoords='data', color='red')
             if row['call'] == 2:
                 ax1.annotate('Sell', (row['inserted_on'], (row['price'])), textcoords='data')
-                if row['status'] !=0:
+                if row['status'] != 0:
                     if row['status'] == 1:
-                        plt.annotate('Sell Exit', (row['updated_on'], row['cPrice']), textcoords='data', color='green')
-                if row['status'] !=0:
+                        ax1.annotate('Sell Exit', (row['updated_on'], row['cPrice']), textcoords='data', color='green')
                     if row['status'] == -1:
-                        plt.annotate('Sell Exit', (row['updated_on'], row['cPrice']), textcoords='data', color='red')
+                        ax1.annotate('Sell Exit', (row['updated_on'], row['cPrice']), textcoords='data', color='red')
     # ax2.clear()
     # ax3.clear()
     # ax4.clear()
