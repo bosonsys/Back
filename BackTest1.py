@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from mpl_finance import candlestick_ohlc
 import matplotlib.animation as animation
 import pandas as pd
 from sqlalchemy import create_engine
@@ -30,7 +32,7 @@ ax1 = plt.subplot2grid((6,1), (0,0), colspan=1, rowspan=6)
 # ax4 = plt.subplot2grid((6,1), (5,0), colspan=1, sharex=ax1)
 
 def animate(i):
-    name = 'INFIBEAM'
+    name = 'PCJEWELLER'
     query = 'SELECT * FROM kite_watch where tradingsymbol ="'+name+'" and insert_on > "' + gDate + '" and insert_on < "' + nDate + '"'
     df = pd.read_sql_query(query, engine)
     indQ = 'SELECT * FROM indicators where tradingsymbol ="'+name+'" and  insert_on > "' + gDate + '" and insert_on < "' + nDate + '"'
@@ -43,7 +45,11 @@ def animate(i):
     callF = call.loc[call['nse'] == name]
     ax1.clear()
     ax1.set_title(name)
+    ax1.plot(df['insert_on'], df['mHigh'])
     ax1.plot(df['insert_on'], df['lastPrice'])
+    ax1.plot(df['insert_on'], df['mLow'])
+    # candlestick_ohlc(ax1, zip(mdates.date2num(df['insert_on']), df['lastPrice'], df['mHigh'], df['mLow'], df['lastPrice']), width=1)
+    # candlestick_ohlc(ax1, ohlc, width=0.4, colorup='#77d879', colordown='#db3f3f')
     # ax1.plot(indVal['insert_on'], indVal['sma1'])
     # ax1.plot(indVal['insert_on'], indVal['sma2'])
     # ax1.plot(df['insert_on'], df['lastPrice'].rolling(9).mean(), label= 'MA 9 days')
@@ -51,7 +57,7 @@ def animate(i):
     # ax1.plot(df['insert_on'], df['lastPrice'].rolling(100).mean(),label= 'MA 50 days')
     for sw in swVal.iterrows():
         # print()
-        ax1.plot([sw[1]['stime'], sw[1]['etime']], [sw[1]['sprice'], sw[1]['eprice']], color="red")
+        ax1.plot([sw[1]['stime'], sw[1]['etime']], [sw[1]['sprice'], sw[1]['eprice']], color="c")
         ax1.annotate(sw[1]['sLenth'], (sw[1]['etime'], (sw[1]['sprice'])), textcoords='data')
 
     # plt.xticks(rotation=45)
