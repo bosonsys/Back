@@ -2,10 +2,28 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 from mpl_finance import candlestick_ohlc
+import pandas as pd
 
 import numpy as np
 import urllib
 import datetime as dt
+
+from sqlalchemy import create_engine
+
+gDate = "2018-11-09 09:15:00"
+nDate = "2018-11-09 15:20:00"
+
+engine = create_engine('mysql+pymysql://root:@localhost/market')
+# query = 'SELECT * FROM marketwatch where updatedTime > \"2018-09-26 \" and updatedTime < \"2018-09-28\"';
+
+query = 'SELECT * FROM kite_watch where insert_on > "'+gDate+'" and insert_on < "'+nDate+'"';
+df = pd.read_sql_query(query, engine)
+df.set_index('id')
+df.head()
+
+callQ = 'SELECT * FROM intra_call where inserted_on > "'+gDate+'"';
+call = pd.read_sql_query(callQ, engine)
+print(df.head())
 
 
 def bytespdate2num(fmt, encoding='utf-8'):
@@ -40,7 +58,7 @@ def graph_data(stock):
                                                                       converters={0: bytespdate2num('%Y-%m-%d')})
 
     x = 0
-    y = len(date)
+    y = len(df)
     ohlc = []
 
     while x < y:
@@ -49,6 +67,7 @@ def graph_data(stock):
         x += 1
 
     candlestick_ohlc(ax1, ohlc, width=0.4, colorup='#77d879', colordown='#db3f3f')
+    candlestick_ohlc(ax1, zip(mdates.date2num(df['insert_on']), df['lastPrice'][:-1], df['mHigh'], df['mLow'], df['lastPrice']), width=0.4, colorup='#77d879', colordown='#db3f3f')
 
     for label in ax1.xaxis.get_ticklabels():
         label.set_rotation(45)
