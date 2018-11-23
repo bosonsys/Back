@@ -1,4 +1,4 @@
-import numpy as np
+# import numpy as np
 # import matplotlib
 # matplotlib.use('GTK3Agg')  # or 'GTK3Cairo'
 import matplotlib.pyplot as plt
@@ -7,11 +7,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 # gs = gridspec.GridSpec(3, 3)
-fig1, axes1 = plt.subplots(3, 4)
+fig1, axes1 = plt.subplots(3, 4 )
 # fig2, axes2 = plt.subplots(3, 3)
 
-gDate = "2018-11-21 09:00:00"
-nDate = "2018-11-21 15:20:00"
+gDate = "2018-11-22 09:00:00"
+nDate = "2018-11-22 15:20:00"
 
 engine = create_engine('mysql+pymysql://root:@localhost/market')
 
