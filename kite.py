@@ -5,6 +5,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Initialise
 kws = KiteTicker("your_api_key", "your_access_token")
+# kws = KiteTicker("your_api_key", "your_access_token")
 
 def on_ticks(ws, ticks):
     # Callback to receive ticks.

@@ -10,8 +10,8 @@ from sqlalchemy import create_engine
 fig1, axes1 = plt.subplots(3, 4 )
 # fig2, axes2 = plt.subplots(3, 3)
 
-gDate = "2018-11-22 09:00:00"
-nDate = "2018-11-22 15:20:00"
+gDate = "2018-11-26 09:00:00"
+nDate = "2018-11-26 15:20:00"
 
 engine = create_engine('mysql+pymysql://root:@localhost/market')
 
@@ -65,5 +65,5 @@ def animate(i):
 manager = plt.get_current_fig_manager()
 manager.resize(*manager.window.maxsize())
 # fig1.subplots_adjust(hspace=0)
-ani = animation.FuncAnimation(fig1, animate, interval=5000)
+ani = animation.FuncAnimation(fig1, animate, interval=500)
 plt.show()

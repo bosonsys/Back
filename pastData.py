@@ -18,8 +18,9 @@ connection = pymysql.connect(host='localhost',
                              cursorclass=pymysql.cursors.DictCursor)
 
 # execute SQL query using execute() method.
-sql = "INSERT INTO `csvdata` (`SYMBOL`, `SERIES`, `OPEN`, `HIGH`, `LOW`, `CLOSE`, `LAST`, `PREVCLOSE`, `TOTTRDQTY`, `TOTTRDVAL`, `TIMESTAMP`, `TOTALTRADES`, `ISIN`,`OPENP`, `CLOSEP`) " \
-"VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+sql = "INSERT INTO `csvdata` (`SYMBOL`, `SERIES`, `OPEN`, `HIGH`, `LOW`, `CLOSE`, `LAST`, `PREVCLOSE`," \
+        "`TOTTRDQTY`, `TOTTRDVAL`, `TIMESTAMP`, `TOTALTRADES`, `ISIN`,`OPENP`, `CLOSEP`) " \
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
 
 
 def get_zip(file_url):
@@ -56,7 +57,7 @@ def insert_data(df):
         # connection.close()
 
 a = date(2017, 11, 1)
-b = date(2017, 12, 31)
+b = date(2018, 11, 22)
 
 for dt in rrule(DAILY, dtstart=a, until=b):
     nse = dt.strftime("%Y/%b/").upper()
