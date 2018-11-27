@@ -19,22 +19,14 @@ kws = KiteTicker("qw4l9hh030dgujks", "gHQNS5std0datqlIcOdgLutsXlMNWBEI")
 # execute SQL query using execute() method.
 
 sql = "INSERT INTO `kite_ticker` (`instrument_token`, `last_price`, `last_quantity`, `volume`," \
-        "`buy_quantity`, `sell_quantity`) " \
-        "VALUES (%s, %s, %s, %s, %s, %s);"
+        "`buy_quantity`, `sell_quantity`, `change`) VALUES (%s, %s, %s, %s, %s, %s, %s);"
 
 
 def on_ticks(ws, ticks):
     # Callback to receive ticks.
     # logging.debug("Ticks: {}".format(ticks))
-    print(type(ticks))
-    # ticks['tradable'].remove()
-    # print(ticks)
-    for d in ticks:
-        # d.remove('tradable')
-        del d['tradable'], d['mode'], d['ohlc'], d['average_price'], d['change']
-        print(d)
-        connection.cursor().execute(sql, d)
-    # connection.commit()
+    # print(type(ticks))
+    insert_data(ticks)
 
 def on_connect(ws, response):
     # Callback on successful connect.
@@ -49,6 +41,20 @@ def on_close(ws, code, reason):
     # Reconnection will not happen after executing `ws.stop()`
     ws.stop()
     connection.close()
+
+def insert_data(df):
+    try:
+        with connection.cursor() as cursor:
+            # Create a new record
+            for d in df:
+                data = (d['instrument_token'], d['last_price'], d['last_quantity'], d['volume'], d['buy_quantity'], d['sell_quantity'], d['change'])
+                cursor.execute(sql, data)
+
+        # connection is not autocommit by default. So you must commit to save
+        # your changes.
+        # connection.commit()
+    finally:
+        print("Done")
 
 # Assign the callbacks.
 kws.on_ticks = on_ticks
