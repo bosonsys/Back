@@ -56,8 +56,8 @@ def insert_data(df):
         print("Done - " + dateC)
         # connection.close()
 
-a = date(2017, 11, 1)
-b = date(2018, 11, 22)
+a = date(2018, 11, 20)
+b = date(2018, 11, 28)
 
 for dt in rrule(DAILY, dtstart=a, until=b):
     nse = dt.strftime("%Y/%b/").upper()

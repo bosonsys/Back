@@ -4,7 +4,7 @@ from kiteconnect import KiteTicker
 logging.basicConfig(level=logging.DEBUG)
 
 # Initialise
-kws = KiteTicker("your_api_key", "your_access_token")
+kws = KiteTicker("qw4l9hh030dgujks", "rM303fqF7ntI2QxfZ7OqV1LXu4hiiERU")
 # kws = KiteTicker("your_api_key", "your_access_token")
 
 def on_ticks(ws, ticks):
