@@ -1,12 +1,12 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from mpl_finance import candlestick_ohlc
+# from mpl_finance import candlestick_ohlc
 import matplotlib.animation as animation
 import pandas as pd
 from sqlalchemy import create_engine
 
-gDate = "2018-11-09 09:15:00"
-nDate = "2018-11-09 15:20:00"
+gDate = "2018-11-28 09:15:00"
+nDate = "2018-11-28 15:20:00"
 
 engine = create_engine('mysql+pymysql://root:@localhost/market')
 # query = 'SELECT * FROM marketwatch where updatedTime > \"2018-09-26 \" and updatedTime < \"2018-09-28\"';
@@ -21,7 +21,7 @@ call = pd.read_sql_query(callQ, engine)
 print(df.head())
 
 # names = df.tradingsymbol.unique()
-#print(names)
+# print(names)
 
 # With Pands Rolling Function with Percentage
 plt.rcParams["figure.figsize"] = (20,8)
@@ -32,7 +32,7 @@ ax1 = plt.subplot2grid((6,1), (0,0), colspan=1, rowspan=6)
 # ax4 = plt.subplot2grid((6,1), (5,0), colspan=1, sharex=ax1)
 
 def animate(i):
-    name = 'PCJEWELLER'
+    name = 'INFIBEAM'
     query = 'SELECT * FROM kite_watch where tradingsymbol ="'+name+'" and insert_on > "' + gDate + '" and insert_on < "' + nDate + '"'
     df = pd.read_sql_query(query, engine)
     indQ = 'SELECT * FROM indicators where tradingsymbol ="'+name+'" and  insert_on > "' + gDate + '" and insert_on < "' + nDate + '"'
@@ -46,10 +46,10 @@ def animate(i):
     ax1.clear()
     ax1.set_title(name)
     # ax1.plot(df['insert_on'], df['mHigh'])
-    # ax1.plot(df['insert_on'], df['lastPrice'])
+    ax1.plot(df['insert_on'], df['lastPrice'])
     # ax1.plot(df['insert_on'], df['mLow'])
     # candlestick_ohlc(ax1, )
-    candlestick_ohlc(ax1, zip(mdates.date2num(df['insert_on']), df['lastPrice'][:-1], df['mHigh'], df['mLow'], df['lastPrice']), width=0.4, colorup='#77d879', colordown='#db3f3f')
+    # candlestick_ohlc(ax1, zip(mdates.date2num(df['insert_on']), df['lastPrice'][:-1], df['mHigh'], df['mLow'], df['lastPrice']), width=0.4, colorup='#77d879', colordown='#db3f3f')
     # candlestick_ohlc(ax1, ohlc, width=0.4, colorup='#77d879', colordown='#db3f3f')
     # ax1.plot(indVal['insert_on'], indVal['sma1'])
     # ax1.plot(indVal['insert_on'], indVal['sma2'])
@@ -61,7 +61,7 @@ def animate(i):
         ax1.plot([sw[1]['stime'], sw[1]['etime']], [sw[1]['sprice'], sw[1]['eprice']], color="c")
         ax1.annotate(sw[1]['sLenth'], (sw[1]['etime'], (sw[1]['sprice'])), textcoords='data')
 
-    # plt.xticks(rotation=45)
+    plt.xticks(rotation=45)
     for index, row in callF.iterrows():
             if row['call'] == 1:
                 ax1.annotate('Buy', (row['inserted_on'], (row['price'])), textcoords='data')
