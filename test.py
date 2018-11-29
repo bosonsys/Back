@@ -28,7 +28,35 @@ def _sma(l):
 # _sma(5)
 
 
-r = RingBuffer(capacity=4, dtype=np.int)
-for c in '123456789':
-    r.append(c)   # r.appendleft(False)
-    print(np.array(r))  # array([False, True])
+# r = RingBuffer(capacity=4, dtype=np.int)
+# for c in '123456789':
+#     r.append(c)   # r.appendleft(False)
+#     print(np.array(r))  # array([False, True])
+
+# import time
+# starttime = time.time()
+# print("Start")
+# while True:
+#     print(((time.time() - starttime) % 60.0))
+
+#     print("tick")
+#     time.sleep(60.0 - ((time.time() - starttime) % 60.0))
+
+#
+# import numpy as np
+# from matplotlib import pyplot as plt
+#
+# data = {"x": np.arange(50), "y": np.random.random(50)}
+#
+#
+# avg, sigma = data['y'].mean(), data['y'].std()
+# mask_highs = data['y'] > avg + sigma
+# mask_lows = data['y'] < avg - sigma
+# mask_middle = ~ mask_highs & ~ mask_lows
+# plt.scatter(data['x'][mask_highs],data['y'][mask_highs],c="green")
+# plt.scatter(data['x'][mask_lows],data['y'][mask_lows],c="black")
+# plt.scatter(data['x'][mask_middle],data['y'][mask_middle],c="blue")
+#
+# plt.axhline(avg + sigma, c="red")
+# plt.axhline(avg - sigma, c="red")
+# plt.show()
