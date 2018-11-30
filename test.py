@@ -33,14 +33,23 @@ def _sma(l):
 #     r.append(c)   # r.appendleft(False)
 #     print(np.array(r))  # array([False, True])
 
-# import time
-# starttime = time.time()
+import time
+starttime = time.time()
 # print("Start")
-# while True:
-#     print(((time.time() - starttime) % 60.0))
+def print_ts(message):
+    print("[%s] %s"%(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), message))
 
-#     print("tick")
-#     time.sleep(60.0 - ((time.time() - starttime) % 60.0))
+
+while True:
+    t = time.strftime("%S", time.localtime())
+    # print(t)
+    if(int(t)%30 == 0):
+        if(flag == 1):
+            print_ts("tick")
+            flag = 0
+    else:
+        flag = 1
+
 
 #
 # import numpy as np
