@@ -17,7 +17,7 @@ connection = pymysql.connect(host='localhost',
 logging.basicConfig(level=logging.DEBUG)
 
 # Initialise
-kws = KiteTicker("qw4l9hh030dgujks", "HI47yJjYYp9ebMQlxCUXO4YNoD8OzEgq")
+kws = KiteTicker("qw4l9hh030dgujks", "QcR2TkB3FdUzFOB4M3hphPFa9kIlQ06q")
 # kws = KiteTicker("your_api_key", "your_access_token")
 sList = [7455745, 4159745, 3050241, 4451329, 1492737, 4701441, 2997505, 625153, 5202177, 3660545, 134657, 1076225]
 flag = 1
@@ -30,6 +30,7 @@ sql = "INSERT INTO `kite_ticker` (`instrument_token`, `last_price`, `last_quanti
 # print(df)
 
 def on_ticks(ws, ticks):
+    global flag
     # Callback to receive ticks.
     insert_data(ticks)
     t = time.strftime("%S", time.localtime())
@@ -65,7 +66,7 @@ def insert_candle(df):
             # Create a new record
             for d in df:
                 data = (d['instrument_token'], d['last_price'], d['last_quantity'], d['volume'], d['buy_quantity'], d['sell_quantity'], d['change'])
-                cursor.execute(sql, data)
+                # cursor.execute(sql, data)
 
         # connection is not autocommit by default. So you must commit to save
         # your changes.
@@ -81,11 +82,11 @@ def insert_data(df):
             for d in df:
                 data = (d['instrument_token'], d['last_price'], d['last_quantity'], d['volume'], d['buy_quantity'], d['sell_quantity'], d['change'])
                 cursor.execute(sql, data)
-                i = wList[d['instrument_token']]
-                if (i['high'] < i.lastPrice):
-                    i['high']  = i.lastPrice
-                if (i['low'] > i.lastPrice):
-                    i['low'] = i.lastPrice
+                # i = wList[d['instrument_token']]
+                # if (i['high'] < i.lastPrice):
+                #     i['high']  = i.lastPrice
+                # if (i['low'] > i.lastPrice):
+                #     i['low'] = i.lastPrice
                     # cName.push(sd[a])
 
         # connection is not autocommit by default. So you must commit to save
